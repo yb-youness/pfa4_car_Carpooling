@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dash</title>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:300,300i,500,500i,700|Barriecito"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
+    />
+    <link
+      th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css"
+    />
+
+    <link rel="stylesheet" th:href="@{/assets/css/style1.css}" />
+  </head>
+  <body>
+    <!-- partial:index.partial.html -->
+    <input
+      class="variation"
+      id="bluepurple"
+      type="radio"
+      value="1"
+      name="color"
+      checked="checked"
+    />
+    <label for="bluepurple"></label>
+    <input class="variation" id="sunset" type="radio" value="2" name="color" />
+    <label for="sunset"></label>
+    <input class="variation" id="godiva" type="radio" value="3" name="color" />
+    <label for="godiva"></label>
+    <input class="variation" id="dark" type="radio" value="4" name="color" />
+    <label for="dark"></label>
+    <input class="variation" id="pinkaru" type="radio" value="5" name="color" />
+    <label for="pinkaru"></label>
+    <main>
+      <nav>
+        <div class="logo">
+          <div class="dog"></div>
+          <div class="text">
+            <a th:href="@{/}"
+              ><img style="width: 30%" th:src="@{../../assets/img/logo.png}"
+            /></a>
+          </div>
+        </div>
+        <div class="navigation">
+          <a   class="active" th:href="@{/dash}">Liste d'attente</a>
+          <a  th:href="@{/trajetdash}">Acceptés</a>
+          <a  th:href="@{/trajetdashRef}">Refusés</a>
+          <a  th:href="@{/userdash}">Utilisateurs</a>
+        </div>
+        <div class="profile">
+          <a class="button primary medium" th:href="@{/logout}"
+            ><i class="icon-user"></i
+          ></a>
+        </div>
+      </nav>
+      <section class="stats">
+        <div class="stats__item">
+          <h2 class="stats__number" th:text="${count}"></h2>
+          <p class="stats__info">Trajet</p>
+        </div>
+        <div class="stats__item">
+          <h2 class="stats__number" th:text="${count1}"></h2>
+          <p class="stats__info">Utilisateurs</p>
+        </div>
+        <div class="stats__item">
+          <h2 class="stats__number" th:text="${count2}"></h2>
+          <p class="stats__info">Covoiturage</p>
+        </div>
+        <div class="well-cta">
+          <div class="well-cta__text">
+            <h3>Do it !</h3>
+          </div>
+          <div class="well-cta__image">
+            <img th:src="@{../../assets/img/carr.png}" />
+          </div>
+        </div>
+      </section>
+      <section class="tables">
+        <h1>Trajets</h1>
+
+        <div class="table__wrapper">
+
+          <table class="table">
+            <thead class="table__header">
+              <tr>
+                <th>Ville Depart</th>
+                <th>Ville Arriver</th>
+                <th>Date Depart</th>
+                <th>Date Arriver</th>
+                <th>Nombre de places</th>
+                <th>Cout</th>
+                <th>Descision</th>
+              </tr>
+            </thead>
+            <tbody class="table__body">
+              <tr th:each="trajet:${listTrajets}" th:if="${trajet.status==0}">
+                <td th:text="${trajet.villedepart}"></td>
+                <td th:text="${trajet.villarrive}"></td>
+                <td th:text="${trajet.datedepart}"></td>
+                <td th:text="${trajet.date_arrivee}"></td>
+                <td th:text="${trajet.nbr_places}"></td>
+                <td th:text="${trajet.cout}"></td>
+                <td>
+                  <div>
+                    <a
+                      type="button"
+                      class="btn btn-outline-success"
+                      th:href="@{/acceptertrajet/{id}(id=${trajet.id})}"
+                    >
+                      Accepter
+                    </a>
+                    <a
+                      type="button"
+                      style="background-color: brown"
+                      class="btn btn-outline-danger"
+                      th:href="@{/refusertrajet/{id}(id=${trajet.id})}"
+                    >
+                      Refuser
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- customers pagination -->
+          <div aria-label="Pagination" th:if="${listTrajets.totalPages gt 0}">
+            <ul class="pagination justify-content-center font-weight-bold">
+              <li
+                class="page-item"
+                th:classappend="${listTrajets.number eq 0} ? 'disabled'"
+              >
+                <a
+                  class="page-link"
+                  th:href="@{/dash?page={id}(id=${listTrajets.number lt 2 ? 1 : listTrajets.number})}"
+                  aria-label="Previous"
+                  title="Previous Page"
+                  data-toggle="tooltip"
+                >
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li
+                class="page-item"
+                th:classappend="${i eq listTrajets.number + 1} ? 'active'"
+                th:each="i : ${#numbers.sequence( 1, listTrajets.totalPages, 1)}"
+              >
+                <a
+                  class="page-link"
+                  th:href="@{/dash?page={id}(id=${i})}"
+                  th:text="${i}"
+                  th:title="${'Page '+ i}"
+                  data-toggle="tooltip"
+                ></a>
+              </li>
+              <li
+                class="page-item"
+                th:classappend="${listTrajets.number + 1 eq listTrajets.totalPages} ? 'disabled'"
+              >
+                <a
+                  class="page-link"
+                  th:href="@{/dash?page={id}(id=${listTrajets.number + 2})}"
+                  aria-label="Next"
+                  title="Next Page"
+                  data-toggle="tooltip"
+                >
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer></footer>
+    <!-- partial -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script th:src="@{/assets/js/script.js}"></script>
+  </body>
+</html>

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+  <title>Go - Index</title>
+  <meta content="" name="description" />
+
+  <meta content="" name="keywords" />
+  <link th:href="@{/assets/img/logo.png}" rel="icon" type = "image/x-icon" />
+  <link th:href="@{/assets/img/logo.png}" rel="apple-touch-icon" />
+  <link
+          href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet"
+  />
+  <link
+          rel="stylesheet"
+          href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+          crossorigin="anonymous"
+  />
+
+  <link
+          th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet"
+  />
+  <link
+          th:href="@{/assets/vendor/bootstrap-icons/bootstrap-icons.css}"
+          rel="stylesheet"
+  />
+  <link th:href="@{/assets/vendor/aos/aos.css}" rel="stylesheet" />
+  <link
+          th:href="@{/assets/vendor/remixicon/remixicon.css}"
+          rel="stylesheet"
+  />
+  <link
+          th:href="@{/assets/vendor/swiper/swiper-bundle.min.css}"
+          rel="stylesheet"
+  />
+  <link
+          th:href="@{/assets/vendor/glightbox/css/glightbox.min.css}"
+          rel="stylesheet"
+  />
+  <link
+          rel="stylesheet"
+          href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+  />
+  <!-- <link rel="stylesheet" href="/resources/demos/style.css" /> -->
+
+  <link th:href="@{/assets/css/style.css}" rel="stylesheet" />
+</head>
+
+<body>
+<!-- ======= Header ======= -->
+<header th:fragment="nav" id="header" class="header fixed-top">
+  <div
+          class="container-fluid container-xl d-flex align-items-center justify-content-between"
+  >
+    <a th:href="@{/}" class="logo d-flex align-items-center">
+      <img th:src="@{/assets/img/logo.png}" alt="" />
+      <span>Let's Go</span>
+    </a>
+
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li>
+          <a class="nav-link scrollto active" th:href="@{/}">Accueil</a>
+        </li>
+        <li sec:authorize="hasRole('ROLE_USER')">
+          <a class="nav-link scrollto" th:href="@{/Trajets}"
+          >Rechercher <i class="fas fa-search"></i
+          ></a>
+        </li>
+        <li sec:authorize="hasRole('ROLE_USER')">
+          <a class="nav-link scrollto"  th:href="@{/Trajetbyid}"
+          >Trajet <i class="fas fa-road"></i
+          ></a>
+        </li>
+        <li sec:authorize="hasRole('ROLE_USER')">
+          <a class="nav-link scrollto" th:href="@{/Covoiturage}"
+          >Covoiturage <i class="fas fa-car"></i
+          ></a>
+        </li>
+        <li sec:authorize="hasRole('ROLE_ADMIN')">
+          <a class="nav-link scrollto" th:href="@{/dash}">Tableau de bord</a>
+        </li>
+
+        <li class="dropdown">
+          <a class="getstarted scrollto" th:href="@{/profilepage}"
+          >Profil<i class="fas fa-user"></i
+          ><i class="bi bi-chevron-right"></i
+          ></a>
+          <ul>
+            <li sec:authorize="!isAuthenticated()">
+              <a th:href="@{/registerform}">Inscription</a>
+            </li>
+            <li sec:authorize="!isAuthenticated()">
+              <a th:href="@{/login}">Connexion</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+              <a th:href="@{/logout}">Déconnexion</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav>
+    <!-- .navbar -->
+  </div>
+</header>
+
+<main id="main">
+  <!-- ======= Breadcrumbs ======= -->
+  <section class="breadcrumbs">
+    <div class="container">
+      <ol>
+        <li><a href="index.html">Accueil</a></li>
+        <li>Rechercher</li>
+      </ol>
+      <h2>Rechercher un voyage</h2>
+    </div>
+  </section>
+  <!-- End Breadcrumbs -->
+
+  <section class="inner-page">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <form method="get" th:action="@{/search}" class="form">
+            <h2 class="text-center">Rechercher un voyage</h2>
+            <div class="row">
+              <div class="question p-1">
+                <input type="text" name="villedepart" required />
+                <label>Ville de départ</label>
+              </div>
+              <div class="question p-1">
+                <input type="text" name="Villarrive" required />
+                <label>Ville d'arrivée</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="question col p-1">
+                <input type="text" name="datedepart" id="datepicker" required />
+                <label>Date de départ</label>
+              </div>
+              <div class="question col p-1">
+                <input type="text" name="date_arrivee" id="datepickerr" required />
+                <label>Date de retour</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="question p-1">
+                <input type="number" name="nbr_places" required />
+                <label>Nombre de passager</label>
+              </div>
+            </div>
+            <div class="row text-center p-1">
+              <button type="submit">Rechercher</button>
+            </div>
+          </form>
+        </div>
+        <!-- card -->
+
+        <div class="col">
+          <section class="main">
+            <article class="article m-2">
+              <h3>
+                Choisissez le voyage qui vous plaît
+                <i class="fas fa-arrows-alt-v"></i>
+              </h3>
+              <div th:if="${#lists.isEmpty(listTrajets)}">
+                 <p style="font-size: 20px;color: darkred;">Aucun trajets </p>
+              </div>
+
+            </article>
+            <article class="article m-2" th:each="trajet :${listTrajets}" th:if="${trajet.status == 1}">
+              <main>
+                <div class="flex-between hint">
+                  <div>Departure</div>
+                  <div>Arrival</div>
+                </div>
+                <div class="flex-between">
+                  <div class="time" th:text="${trajet.villedepart}"></div>
+                  <div class="flex-between info">
+                    <div class="transport">
+                      <img th:src="@{/assets/img/carr.png}" style="width: 40px" />
+                    </div>
+                    <div th:text="${trajet.typeTrajet}" />
+                    <div th:if="${trajet.nbr_places ==0}">
+                      <p>épuisé</p>
+                    </div>
+                    <div  th:if="${trajet.nbr_places >= 1 }">
+                      <div th:text="' Places'+' : '+${trajet.nbr_places}"></div>
+
+                    </div>
+
+                  </div>
+                  <div class="time" th:text="${trajet.villarrive}"></div>
+                </div>
+                <div class="flex-between location">
+                  <div th:text="${trajet.datedepart}"></div>
+                  <div th:text="${trajet.date_arrivee}"></div>
+                </div>
+              </main>
+              <div class="flex-between">
+                <div class="info" style="font-size: 15px">
+                  <a href="#" style="color: black" ><div th:text="'createur : '+${trajet.user.getNom()}"></div></a>
+                </div>
+                <div>
+                  <div class="price" th:text="${trajet.cout}+' '+'DHs'"></div>
+
+                </div>
+              </div>
+                <form class="" th:action="@{/add_covoiturage}" th:object="${covoiturage}" method="post" th:if="${trajet.nbr_places >= 1}" >
+                 <div class="row ">
+                     <div class="col">
+
+                  <input type="number" placeholder="Nombre de passager" min="1" max="4" name="nbr_places" class="form-control border border-primary w-75"  required />
+                   <span style="color: #4b7b8a; font-size: small" th:text="${'NB : le nombre de places max : '+trajet.nbr_places}"> </span>
+                  <input type="hidden" name="trajet_id" class="form-control border border-primary" th:value="${trajet.id}">
+
+                  <input type="hidden" name="id_user"  class="form-control border border-primary" th:value="*{#request.remoteUser}">
+                     </div>
+                     <div class="col">
+                  <button type="submit" class="btn btn-outline-primary btn-sm w-50 " id="myBtn">
+                  Reserver
+                </button>
+
+                     </div>
+                 </div>
+                </form>
+               <!-- <div th:if="${trajet.nbr_places ==0}">
+                 <p>solde out</p>
+                </div> -->
+
+            </article>
+          </section>
+
+
+          <!-- customers pagination -->
+        <div
+                  aria-label="Pagination"
+                  th:if="${listTrajets.totalPages gt 0}"
+          >
+            <ul class="pagination justify-content-center font-weight-bold">
+              <li
+                      class="page-item"
+                      th:classappend="${listTrajets.number eq 0} ? 'disabled'"
+              >
+                <a
+                        class="page-link"
+                        th:href="@{/Trajets?page={id}(id=${listTrajets.number lt 2 ? 1 : listTrajets.number})}"
+                        aria-label="Previous"
+                        title="Previous Page"
+                        data-toggle="tooltip"
+                >
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li
+                      class="page-item"
+                      th:classappend="${i eq listTrajets.number + 1} ? 'active'"
+                      th:each="i : ${#numbers.sequence( 1, listTrajets.totalPages, 1)}"
+              >
+                <a
+                        class="page-link"
+                        th:href="@{/Trajets?page={id}(id=${i})}"
+                        th:text="${i}"
+                        th:title="${'Page '+ i}"
+                        data-toggle="tooltip"
+                ></a>
+              </li>
+              <li
+                      class="page-item"
+                      th:classappend="${listTrajets.number + 1 eq listTrajets.totalPages} ? 'disabled'"
+              >
+                <a
+                        class="page-link"
+                        th:href="@{/Trajets?page={id}(id=${listTrajets.number + 2})}"
+                        aria-label="Next"
+                        title="Next Page"
+                        data-toggle="tooltip"
+                >
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!--        </div>-->
+    <!--      </div>-->
+  </section>
+</main>
+<!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer th:fragment="footer" id="footer" class="footer">
+  <div class="footer-newsletter">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-12 text-center">
+          <h4>A propos de nous</h4>
+          <p>
+            est le premier réseau de covoiturage au monde. Plus besoin d'aller en ville pour quitter la ville :
+            nous mettons en relation passagers et conducteurs prêts à partager
+            leur trajet en voiture pour leur permettre d'aller partout, et sans changement.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-top">
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-lg-5 col-md-12 footer-info">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <img th:src="@{/assets/img/logo.png}" alt="" />
+            <span>Let's Go</span>
+          </a>
+          <p>
+            est le premier réseau de covoiturage au monde. Plus besoin d'aller en ville pour quitter la ville :
+            nous mettons en relation passagers et conducteurs prêts à partager
+            leur trajet en voiture pour leur permettre d'aller partout, et sans changement.
+          </p>
+          <div class="social-links mt-3">
+            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="instagram"
+            ><i class="bi bi-instagram bx bxl-instagram"></i
+            ></a>
+            <a href="#" class="linkedin"
+            ><i class="bi bi-linkedin bx bxl-linkedin"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-6 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li>
+              <i class="bi bi-chevron-right"></i> <a href="#">Home</a>
+            </li>
+            <li>
+              <i class="bi bi-chevron-right"></i> <a href="#">About us</a>
+            </li>
+            <li>
+              <i class="bi bi-chevron-right"></i> <a href="#">Services</a>
+            </li>
+            <li>
+              <i class="bi bi-chevron-right"></i>
+              <a href="#">Terms of service</a>
+            </li>
+            <li>
+              <i class="bi bi-chevron-right"></i>
+              <a href="#">Privacy policy</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-6 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li>
+              <i class="bi bi-chevron-right"></i> <a href="#">Web Design</a>
+            </li>
+            <li>
+              <i class="bi bi-chevron-right"></i>
+              <a href="#">Web Development</a>
+            </li>
+            <li>
+              <i class="bi bi-chevron-right"></i>
+              <a href="#">Product Management</a>
+            </li>
+            <li>
+              <i class="bi bi-chevron-right"></i> <a href="#">Marketing</a>
+            </li>
+            <li>
+              <i class="bi bi-chevron-right"></i>
+              <a href="#">Graphic Design</a>
+            </li>
+          </ul>
+        </div>
+
+        <div
+                class="col-lg-3 col-md-12 footer-contact text-center text-md-start"
+        >
+          <h4>Contact Us</h4>
+          <p>
+            A108 Adam Street <br />
+            New York, NY 535022<br />
+            United States <br /><br />
+            <strong>Phone:</strong> +1 5589 55488 55<br />
+            <strong>Email:</strong> info@example.com<br />
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="copyright">
+      &copy; Copyright <strong><span>Let's Go</span></strong
+    >. All Rights Reserved
+    </div>
+    <div class="credits">Designed by</div>
+  </div>
+</footer>
+<!-- End Footer -->
+<div th:fragment="incjs">
+  <a
+          href="#"
+          class="back-to-top d-flex align-items-center justify-content-center"
+  ><i class="bi bi-arrow-up-short"></i
+  ></a>
+
+  <script
+          th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.js}"
+  ></script>
+  <script th:src="@{assets/vendor/aos/aos.js}"></script>
+  <script th:src="@{assets/vendor/php-email-form/validate.js}"></script>
+  <script th:src="@{assets/vendor/swiper/swiper-bundle.min.js}"></script>
+  <script th:src="@{assets/vendor/purecounter/purecounter.js}"></script>
+  <script
+          th:src="@{assets/vendor/isotope-layout/isotope.pkgd.min.js}"
+  ></script>
+  <script th:src="@{assets/vendor/glightbox/js/glightbox.min.js}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" integrity="sha512-LT9fy1J8pE4Cy6ijbg96UkExgOjCqcxAC7xsnv+mLJxSvftGVmmc236jlPTZXPcBRQcVOWoK1IJhb1dAjtb4lQ==" crossorigin="anonymous" />
+
+  <!-- Template Main JS File -->
+  <script th:src="@{/assets/js/main.js}"></script>
+  <script>
+    $(function () {
+      var availableTags = [
+        "Oujda",
+        "Fes",
+        "Rabat",
+        "Casablanca",
+        "Ouarzazat",
+        "Agadir",
+        "Marrekch",
+        "Meknes",
+        "Medieq",
+        "Saidia",
+        "Ahfir",
+        "Cap de l'eau",
+        "Bab Berred",
+        "Bab Taza",
+        "Ben Ahmed",
+        "Beni Chiker",
+        "Beni Ansar",
+        "Beni Mellal",
+        "Ben Slimane",
+        "Ben Taieb",
+        "Ben Yakhlef",
+        "Berkane",
+        "Berrechid",
+        "Bhalil",
+        "Bir GanBirdus",
+        "Bir Lehlou",
+        "Bni Bouayach",
+        "Bni Drar",
+        "Bni Hadifa",
+        "Beni Tadjit",
+        "Bouarfa",
+        "Bou Craa",
+        "Bouanane",
+        "Boudnib",
+        "Boufakrane",
+        "Bouguedra",
+        "Bouizakarne",
+        "Boujad",
+        "Boujdour (Cabo Bojador)",
+        "Bouknadel",
+        "Boulemane",
+        "Boumalne Dadès",
+        "Boumia",
+        "Bouskoura",
+        "Bouznika",
+        "Bradia",
+        "Brikcha",
+        "Chefchaouen",
+        "Chemaia",
+        "Chichaoua",
+      ];
+      $("#vd").autocomplete({
+        source: availableTags,
+      });
+      $("#va").autocomplete({
+        source: availableTags,
+      });
+    });
+
+    $(function () {
+      $("#datepickerr").datetimepicker({
+        dateFormat: "yy-mm-dd",
+        timeFormat: "hh:mm:ss",
+        showTimePicker: false,
+        showSecond:false,
+        showMillisec:false,
+        showMicrosec:false,
+        showTimezone:false
+      });
+    });
+
+    $(function () {
+      $("#datepicker").datetimepicker({
+        dateFormat: "yy-mm-dd",
+        timeFormat: "hh:mm:ss",
+        showTimePicker: false,
+        showSecond:false,
+        showMillisec:false,
+        showMicrosec:false,
+        showTimezone:false
+      });
+    });
+
+
+    /*
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }*/
+
+
+  </script>
+</div>
+</body>
+</html>

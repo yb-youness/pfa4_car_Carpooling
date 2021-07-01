@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="home.html :: head">
+    <meta charset="UTF-8">
+    <title>Form</title>
+</head>
+<div>
+    <header th:replace="home.html :: nav"></header>
+
+    <main id="main">
+        <section class="breadcrumbs">
+            <div class="container">
+                <ol>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li>Covoiturage</li>
+                </ol>
+                <h2>Covoiturage</h2>
+            </div>
+        </section>
+
+        <section class="inner-page">
+            <div class="container emp-profile" >
+                <form method="post">
+                    <div class="row">
+                        <div class="col-md-4" >
+                            <div th:if="${users.get().gender == 'femme'}" class="profile-img" >
+                                <img th:src="@{/assets/img/girl.png}" alt=""/>
+
+                            </div>
+                            <div th:if="${users.get().gender == 'homme'}" class="profile-img">
+                                <img th:src="@{/assets/img/man.png}" alt=""/>
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="profile-head">
+                                <h5 th:text="${users.get().nom} +' '+${users.get().prenom}">
+
+                                </h5>
+                                <div class="col-md-2">
+                                  <a type="button" class="profile-edit-btn" th:href="@{/profileedit}" >Edit</a>
+                                </div>
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">A propos</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+
+
+                    <div class="row">
+
+                        <div class="col-md-8">
+                            <div class="tab-content profile-tab" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Nom et prenom</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p th:text="${users.get().nom} +' '+ ${users.get().prenom}"></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Email</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p th:text="${users.get().email}"></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Tele</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p th:text="${users.get().tel}"></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>sexe</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p th:text="${users.get().gender}"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </section>
+
+        </section>
+    </main>
+
+</div>
+
+<!-- Template Main JS File -->
+<footer th:replace="home.html :: footer "></footer>
+<footer th:replace="home.html :: incjs "></footer>
+
+</div>
+</body>
+
+</html>

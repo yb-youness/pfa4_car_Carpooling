@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<div xmlns:th="http://www.thymeleaf.org">
+<head th:replace="home.html :: head">
+    <meta charset="UTF-8">
+    <title>Form</title>
+</head>
+
+<div>
+    <header th:replace="home.html :: nav"></header>
+    <main id="main">
+
+
+
+    &nbsp;
+
+        <section class="breadcrumbs">
+            <div class="container">
+                <ol>
+                    <li><a href="index.html">Home</a></li>
+                    <li>Trajets</li>
+                </ol>
+                <h2>Trajets</h2>
+            </div>
+        </section>
+    <section class="inner-page">
+        <div class="container">
+            <div class="alert alert-dismissible alert-success"   th:if="${msg}" >
+                <button type="button" class="btn-close" data-dismiss="alert">&times;</button>
+                <strong th:text="${msg}"></strong>.
+            </div>
+
+            <div class="col">
+                <section class="main">
+                    <article class="article m-2 flex-between">
+                        <h3>
+                            Votre trajets :
+                            <i class="fas fa-arrows-alt-v"></i>
+                        </h3>
+                        <a class="btn btn-primary nav-link scrollto"  th:href="@{/trajetForm}"
+                        >Proposer un Trajet  <i class="fas fa-plus"></i
+                        ></a>
+                    </article>
+                    <article class="article m-2" th:each="trajet :${listTrajets}">
+                        <main>
+                            <div class="flex-between hint">
+                                <div>Departure</div>
+                                <div>Arrival</div>
+                            </div>
+                            <div class="flex-between">
+                                <div class="time" th:text="${trajet.villedepart}"></div>
+                                <div class="flex-between info">
+                                    <div class="transport">
+                                        <img src="/assets/img/carr.png" style="width: 40px" />
+                                    </div>
+                                    <div th:text="${trajet.getTypeTrajet()}"></div>
+                                    <div th:text="' Places'+' : '+${trajet.nbr_places}"></div>
+                                    <div th:if="${trajet.status == 1}">
+                                        <p style="color: #0a58ca">Activé</p>
+                                    </div>
+                                    <div th:if="${trajet.status == 0}">
+                                        <p style="color: #0a58ca">En attente </p>
+                                    </div>
+                                    <div th:if="${trajet.status == 2}">
+                                        <p style="color: darkred">Refusé</p>
+                                    </div>
+                                </div>
+                                <div class="time" th:text="${trajet.villarrive}"></div>
+                            </div>
+                            <div class="flex-between location">
+                                <div th:text="${trajet.datedepart}"></div>
+                                <div th:text="${trajet.date_arrivee}"></div>
+                            </div>
+                        </main>
+                        <div class="flex-between">
+                            <div style="font-size: 15px">
+                                <a href="#" style="color: black"> <div th:text="'createur : '+${trajet.user.getNom()}"></div> </a>
+                            </div>
+                            <div>
+                                <div class="price" th:text="${trajet.cout}+' '+'DHs'"></div>
+
+                            </div>
+
+                            <a th:href="@{/DeleteTrajet/{id}(id=${trajet.id})}" class="btn btn-outline-danger btn-sm">
+                                Annuler
+                            </a>
+
+
+                        </div>
+                    </article>
+                </section>
+            </div>
+            <!-- customers pagination -->
+            <div
+                    aria-label="Pagination"
+                    th:if="${listTrajets.totalPages gt 0}"
+            >
+                <ul class="pagination justify-content-center font-weight-bold">
+                    <li
+                            class="page-item"
+                            th:classappend="${listTrajets.number eq 0} ? 'disabled'"
+                    >
+                        <a
+                                class="page-link"
+                                th:href="@{/Trajetbyid?page={id}(id=${listTrajets.number lt 2 ? 1 : listTrajets.number})}"
+                                aria-label="Previous"
+                                title="Previous Page"
+                                data-toggle="tooltip"
+                        >
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li
+                            class="page-item"
+                            th:classappend="${i eq listTrajets.number + 1} ? 'active'"
+                            th:each="i : ${#numbers.sequence( 1, listTrajets.totalPages, 1)}"
+                    >
+                        <a
+                                class="page-link"
+                                th:href="@{/Trajetbyid?page={id}(id=${i})}"
+                                th:text="${i}"
+                                th:title="${'Page '+ i}"
+                                data-toggle="tooltip"
+                        ></a>
+                    </li>
+                    <li
+                            class="page-item"
+                            th:classappend="${listTrajets.number + 1 eq listTrajets.totalPages} ? 'disabled'"
+                    >
+                        <a
+                                class="page-link"
+                                th:href="@{/Trajets?page={id}(id=${listTrajets.number + 2})}"
+                                aria-label="Next"
+                                title="Next Page"
+                                data-toggle="tooltip"
+                        >
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    </main>
+
+</div>
+
+
+
+<!-- Template Main JS File -->
+<footer th:replace="home.html :: footer "></footer>
+<footer th:replace="home.html :: incjs "></footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dash</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,500,500i,700|Barriecito" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css'><link rel="stylesheet" th:href="@{/assets/css/style1.css}">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<input class="variation" id="bluepurple" type="radio" value="1" name="color" checked="checked"/>
+<label for="bluepurple"></label>
+<input class="variation" id="sunset" type="radio" value="2" name="color"/>
+<label for="sunset"></label>
+<input class="variation" id="godiva" type="radio" value="3" name="color"/>
+<label for="godiva"></label>
+<input class="variation" id="dark" type="radio" value="4" name="color"/>
+<label for="dark"></label>
+<input class="variation" id="pinkaru" type="radio" value="5" name="color"/>
+<label for="pinkaru"></label>
+<main>
+    <nav>
+        <div class="logo">
+            <div class="dog">
+
+            </div>
+            <div class="text">  <a th:href="@{/}"><img style="width: 30%" th:src="@{../../assets/img/logo.png}"></a></div>
+        </div>
+        <div class="navigation">
+            <a th:href="@{/dash}">Liste d'attente</a>
+            <a  th:href="@{/trajetdash}">Acceptés</a>
+            <a  th:href="@{/trajetdashRef}">Refusés</a>
+            <a class="active"  th:href="@{/userdash}">Utilisateurs</a>
+
+        </div>
+        <div class="profile"><a class="button primary medium" th:href="@{/logout}"><i class="icon-user"></i></a></div>
+    </nav>
+    <section class="stats">
+        <div class="stats__item">
+            <h2 class="stats__number" th:text="${count}"></h2>
+            <p class="stats__info">Trajet</p>
+        </div>
+        <div class="stats__item">
+            <h2 class="stats__number" th:text="${count1}"></h2>
+            <p class="stats__info">Utilisateurs</p>
+        </div>
+        <div class="stats__item">
+            <h2 class="stats__number" th:text="${count2}"></h2>
+            <p class="stats__info">Covoiturage</p>
+        </div>
+        <div class="well-cta">
+            <div class="well-cta__text">
+                <h3>Do it !</h3>
+            </div>
+            <div class="well-cta__image"><img th:src="@{../../assets/img/carr.png}"/></div>
+        </div>
+    </section>
+    <section class="tables">
+        <h1>Trajets</h1>
+        <div class="table__wrapper">
+            <table class="table">
+                <thead class="table__header">
+                <tr>
+
+                    <th>Id</th>
+                    <th>Email</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Telephone</th>
+
+
+                </tr>
+                </thead>
+                <tbody class="table__body">
+                <tr th:each="user:${UserService}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.nom}"></td>
+                    <td th:text="${user.prenom}"></td>
+                    <td th:text="${user.tel}"></td>
+
+                    <td>
+
+
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+<footer>
+</footer>
+<!-- partial -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script><script  th:src="@{/assets/js/script.js}"></script>
+
+</body>
+</html>

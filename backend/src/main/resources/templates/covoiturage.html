@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="home.html :: head">
+    <meta charset="UTF-8">
+    <title>Form</title>
+</head>
+<div>
+    <header th:replace="home.html :: nav"></header>
+
+
+    <main id="main">
+        <section class="breadcrumbs">
+            <div class="container">
+                <ol>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li>Covoiturage</li>
+                </ol>
+                <h2>Covoiturage</h2>
+            </div>
+        </section>
+
+        <section class="inner-page">
+    <div class="container">
+        <section class="main">
+            <article class="article m-2">
+                <h3>
+                   Votre covoiturage :
+                    <i class="fas fa-arrows-alt-v"></i>
+                </h3>
+            </article>
+            <article class="article m-2" th:each="covoiturage :${listCovoiturage}">
+                <main>
+                    <div class="flex-between hint">
+                        <div>Departure</div>
+                        <div>Arrival</div>
+                    </div>
+                    <div class="flex-between">
+                        <div class="time" th:text="${covoiturage.trajet.getVilledepart()}"></div>
+                        <div class="flex-between info">
+                            <div class="transport">
+                                <img src="/assets/img/carr.png" style="width: 40px" />
+                            </div>
+                            <div th:text="${covoiturage.trajet.getTypeTrajet()}"></div>
+                            <div th:if="${covoiturage.trajet.getNbr_places() ==0}">
+                                <p>solde out</p>
+                            </div>
+                            <div  th:if="${covoiturage.trajet.getNbr_places() >= 1 }">
+                                <div th:text="' Places'+' : '+${covoiturage.trajet.getNbr_places()}"></div>
+
+                            </div>
+                        </div>
+                        <div class="time" th:text="${covoiturage.trajet.getVillarrive()}"></div>
+                    </div>
+                    <div class="flex-between location">
+                        <div th:text="${covoiturage.trajet.getDatedepart()}"></div>
+                        <div th:text="${covoiturage.trajet.getDate_arrivee()}"></div>
+                    </div>
+                </main>
+                <div class="flex-between">
+                    <div class="info" style="font-size: 15px">
+
+                        <a href="#" style="color: black"> <div th:text="'createur : '+${covoiturage.user.getNom()}"></div> </a>
+                    </div>
+                    <div>
+                        <div class="price" th:text="${covoiturage.trajet.getCout()+' '+'DHs'}"></div>
+
+                    </div>
+                    <form th:action="@{/Deletecovoiturage}" method="get">
+
+                        <input type="hidden" name="trajet_id"  th:value="*{covoiturage.trajet.getId()}">
+                        <input type="hidden" name="nbr_places"  th:value="*{covoiturage.nbr_places}">
+                        <input type="hidden" name="id"  th:value="*{covoiturage.id}">
+                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                        Annuler
+                    </button>
+                    </form>
+
+                </div>
+            </article>
+        </section>
+    </div>
+    </section>
+    </main>
+
+    </div>
+
+<!-- Template Main JS File -->
+<footer th:replace="home.html :: footer "></footer>
+<footer th:replace="home.html :: incjs "></footer>
+
+</div>
+</body>
+
+</html>

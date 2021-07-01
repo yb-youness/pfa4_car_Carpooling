@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="home.html :: head">
+    <meta charset="UTF-8">
+    <title>Form</title>
+</head>
+<div>
+    <header th:replace="home.html :: nav"></header>
+
+    <section class="breadcrumbs">
+        <div class="container">
+            <ol>
+                <li><a href="index.html">Home</a></li>
+                <li>Proposer un trajet</li>
+            </ol>
+            <h2>Proposer un trajet</h2>
+        </div>
+    </section>
+
+
+
+    <main class="col">
+        <section>
+        <form  method="post" th:action="@{/process_trajets}" th:object="${trajet}"  class="form ">
+
+
+
+            <h2 class="text-center">Proposer un trajet</h2>
+
+                <div class="row">
+                    <div  class="form-group mb-2">
+                        <label>Ville de départ :</label>
+                        <input type="text"
+                               class="form-control"   th:value="*{villedepart}" id="vd" th:field="*{villedepart}" th:classappend="${#fields.hasErrors('villedepart')} ? is-invalid :''"
+                        />
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('villedepart')}" th:errors="*{villedepart}"></div>
+
+                    </div>
+                    <div class="form-group mb-2">
+                        <label >Ville d'arrivée : </label>
+                        <input class="form-control" type="text" id="va" th:value="*{Villarrive}" th:field="*{Villarrive}" th:classappend="${#fields.hasErrors('Villarrive')} ? is-invalid :''"
+                        />
+                        <div  class="invalid-feedback" th:if="${#fields.hasErrors('Villarrive')}" th:errors="*{Villarrive}"></div>
+
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group mb-2">
+                        <label>Date de départ</label>
+                        <input  class="form-control" type="text" th:field="*{datedepart}" id="datepickerr"
+                                th:value="*{datedepart}" required />
+
+                    </div>
+
+                    <div class="form-group mb-2">
+                        <label>Date d'arrivée</label>
+                        <input class="form-control" required type="text"  th:value="*{date_arrivee}" id="datepicker"
+                               th:field="*{date_arrivee}" />
+
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="form-group mb-2">
+                        <label>Nombre de place</label>
+                        <input class="form-control" type="number" min="1" max="4" th:value="*{nbr_places}" th:field="*{nbr_places}"  th:classappend="${#fields.hasErrors('nbr_places')} ? is-invalid :''"/>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('nbr_places')}" th:errors="*{nbr_places}"></div>
+
+                    </div>
+                    <div class="form-group mb-2">
+                        <label>Cout par place (Dh)</label>
+                        <input class="form-control" type="number" min="10" th:value="*{cout}" th:field="*{cout}"  th:classappend="${#fields.hasErrors('cout')} ? is-invalid :''"/>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('cout')}" th:errors="*{cout}"></div>
+
+                    </div>
+                    <input name="user.id"  type="hidden" th:value="*{#request.remoteUser}"/>
+
+
+                </div>
+
+
+
+                <div class="row">
+
+                    <div class="form-group mb-2">
+                        <label >Type de Trajet : </label>
+                        Régulier  <input type="radio"     th:field="*{TypeTrajet}" value="Régulier"  th:classappend="${#fields.hasErrors('TypeTrajet')} ? is-invalid :''"/>
+                        Ponctuel  <input type="radio"   th:field="*{TypeTrajet}" value="Ponctuel"  th:classappend="${#fields.hasErrors('TypeTrajet')} ? is-invalid :''"/>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('TypeTrajet')}" th:errors="*{TypeTrajet}"></div>
+
+                    </div>
+
+                </div>
+
+                <div class="row text-center p-1">
+                    <button>Ajouter</button>
+
+                </div>
+
+
+    </form>
+        </section>
+
+<!-- Template Main JS File -->
+<footer th:replace="home.html :: footer "></footer>
+<footer th:replace="home.html :: incjs ">
+
+</footer>
+
+</main>
+
+</body>
+</div>
+</html>

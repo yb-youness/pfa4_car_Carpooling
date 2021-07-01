@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<div lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="home.html :: head">
+    <title>Go - Index</title>
+  </head>
+  <div>
+    <header th:replace="home.html :: nav"></header>
+
+<body>
+
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 d-flex flex-column justify-content-center">
+          <h1 data-aos="fade-up">Allez où vous voulez. D'où vous voulez.</h1>
+          <h2 data-aos="fade-up" data-aos-delay="400">Choisissez le voyage qui vous plaît</h2>
+          <div data-aos="fade-up" data-aos-delay="600">
+            <div class="text-center text-lg-start">
+              <a href="#about" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+                <span>Commencer</span>
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
+          <img th:src="@{/assets/img/bg.png}" class="img-fluid" alt="">
+        </div>
+      
+       <!-- section -->
+       
+    
+    </div>
+    </div>
+  
+  </section><!-- End Hero -->
+  
+
+  <main id="main">
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+
+      <div class="container" data-aos="fade-up">
+        <div class="row gx-0">
+
+          <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
+            <div class="content">
+             
+              <form class="form" method="get" th:action="@{/search}">
+
+                <h2 class="text-center">Rechercher un voyage</h2>
+                <div class="row">
+                  <div class="question p-1">
+                    <input type="text" name="villedepart" required />
+                    <label>Ville de départ</label>
+                  </div>
+                  <div class="question p-1">
+                    <input type="text" name="Villarrive" required />
+                    <label>Ville d'arrivée</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="question col p-1">
+                    <input type="text" name="datedepart" id="datepicker" required />
+                    <label>Date de départ</label>
+                  </div>
+                  <div class="question col p-1">
+                    <input type="text" name="date_arrivee" id="datepickerr" required />
+                    <label>Date de retour</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="question p-1">
+                    <input type="number" name="nbr_places" required />
+                    <label>Nombre de passager</label>
+                  </div>
+                </div>
+                <div class="row text-center p-1">
+                  <button type="submit">Rechercher</button>
+                </div>
+              </form>
+         
+            </div>
+          </div>
+
+          <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
+            <img th:src="@{assets/img/pic1.jpg}"  class="img-fluid" alt="">
+          </div>
+
+        </div>
+      </div>
+
+    </section><!-- End About Section -->
+<!-- ======= Features Section ======= -->
+<section id="features" class="features">
+
+  <div class="container" data-aos="fade-up">
+
+    <header class="section-header">
+     
+      <p>prenez le volant ? Dites-nous où vous allez !</p>
+    </header>
+
+    <div class="row">
+
+      <div class="col-lg-6">
+        <img th:src="@{assets/img/pic2.jpg}" class="img-fluid" alt="">
+      </div>
+
+      <div class="col-lg-6 mt-5 mt-lg-0 d-flex">
+        <div class="row align-self-center gy-4">
+
+          
+          <div class="col" data-aos="zoom-out" data-aos-delay="700">
+            
+              <h3><span style="font-weight: bold;color: #4154f1;"> prenez le volant ? Dites-nous où vous allez !</span><br>
+                <br>Ensemble, permettons à des millions de personnes de se déplacer.
+              <h3>
+              <a th:href="@{/trajetForm}" class="btnn">Proposer un trajet <i class="fas fa-car-side"></i></a>
+               
+          
+          </div>
+
+        </div>
+      </div>
+
+    </div> <!-- / row -->
+   
+  </div>
+   </section>
+   
+  <!-- ======= Team Section ======= -->
+  <section id="team" class="team">
+
+  
+
+    
+  </section><!-- End Team Section -->
+
+
+  <!-- ======= Footer ======= -->
+    <footer th:replace="home.html :: footer "></footer>
+
+    <div th:replace="home.html :: incjs"></div>
+</body>
+
+</html>
