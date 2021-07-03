@@ -1,4 +1,4 @@
-# GitHub Finder
+# Lets'go Car Pooling 
 
 ![Project Image1](./img/index.png)
 ![Project Image2](./img/register.png)
